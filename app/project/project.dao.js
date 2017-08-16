@@ -56,7 +56,7 @@ function findById(id, callback) {
         callback(err);
       });
   } else {
-
+    callback(new Error('Id can\'t be null'));
   }
 
 
