@@ -99,7 +99,7 @@ ProjectModel.relationMappings = {
       },
       to: 'projects.parent_id'
     }
-  },
+  }
 };
 
 //converte pra snakeCase ('fooBar' => 'foo_bar')
