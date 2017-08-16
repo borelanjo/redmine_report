@@ -79,41 +79,6 @@ UserModel.jsonSchema = {
   }
 };
 
-// This object defines the relations to other models.
-UserModel.relationMappings = {
-  parent: {
-    relation: Model.BelongsToOneRelation,
-    // The related model. This can be either a Model
-    // subclass constructor or an absolute file path
-    // to a module that exports one. We use the file
-    // path version in this example to prevent require
-    // loops.
-    modelClass: __dirname + '/user.model',
-    join: {
-      from: 'users.parent_id',
-      to: 'users.id'
-    }
-
-  },
-  children: {
-    relation: Model.HasManyRelation,
-    modelClass: __dirname + '/user.model',
-    join: {
-      from: 'users.id',
-      // ManyToMany relation needs the `through` object
-      // to describe the join table.
-      through: {
-        // If you have a model class for the join table
-        // you need to specify it like this:
-        // modelClass: PersonMovie,
-        from: 'users.id',
-        to: 'users.parent_id'
-      },
-      to: 'users.parent_id'
-    }
-  },
-};
-
 //converte pra snakeCase ('fooBar' => 'foo_bar')
 UserModel.prototype.$formatDatabaseJson = function(json) {
   json = Model.prototype.$formatDatabaseJson.call(this, json);
