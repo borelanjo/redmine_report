@@ -1,6 +1,4 @@
 module.exports = {
-
-
   development: {
     client: 'mysql2',
     connection: {
@@ -10,5 +8,4 @@ module.exports = {
       database: 'redmine'
     }
   }
-
 };
