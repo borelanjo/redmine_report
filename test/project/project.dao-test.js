@@ -43,7 +43,7 @@ describe('projectDao', function() {
 
   describe('findById', function() {
     it('Deve ser obtido o projeto pelo número do seu id', function(done) {
-      projectDao.findById(1, function(err, project) {
+      projectDao.findById(1, null, function(err, project) {
         if (err) {
           done(err);
         } else {
@@ -57,13 +57,28 @@ describe('projectDao', function() {
 
     });
     it('Caso não seja passado um ID deve ser retornado um erro', function(done) {
-      projectDao.findById(null, function(err, project) {
+      projectDao.findById(null, null, function(err, project) {
         if (err) {
           done();
         }
 
       });
 
+    });
+
+    it('Se for passado a opção eager() deve vir os objetos relacionados a projeto', function(done) {
+      var option = {
+        eager: '[members,versions]'
+      };
+      projectDao.findById(1, option, function(err, project) {
+        if (err) {
+          done(err);
+        } else {
+          expect(project.members).to.be.a('array');
+          expect(project.versions).to.be.a('array');
+          done();
+        }
+      })
     });
 
 

@@ -41,14 +41,22 @@ function findAll(asTree, callback) {
 
 }
 
-function findById(id, callback) {
+function findById(id, option, callback) {
 
   if (id) {
-    projectModel
+    var queryBuilder = projectModel
       .query()
       .where('id', id)
       .orderBy('id')
       .first()
+
+    for (var variable in option) {
+      if (option.hasOwnProperty(variable)) {
+        queryBuilder[variable](option[variable])
+      }
+    }
+
+    queryBuilder
       .then(function(projects) {
         callback(null, projects);
       })

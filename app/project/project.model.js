@@ -1,4 +1,5 @@
 var Model = require('objection').Model;
+var path = require('path');
 var _ = require('lodash');
 
 /**
@@ -98,6 +99,32 @@ ProjectModel.relationMappings = {
         to: 'projects.parent_id'
       },
       to: 'projects.parent_id'
+    }
+  },
+  members: {
+    relation: Model.ManyToManyRelation,
+    modelClass: path.join(__dirname, '..', 'user/user.model'),
+    join: {
+      from: 'projects.id',
+      // ManyToMany relation needs the `through` object
+      // to describe the join table.
+      through: {
+        // If you have a model class for the join table
+        // you need to specify it like this:
+        // modelClass: PersonMovie,
+        modelClass: path.join(__dirname, '..', 'member/member.model'),
+        from: 'members.project_id',
+        to: 'members.user_id'
+      },
+      to: 'users.id'
+    }
+  },
+  versions: {
+    relation: Model.HasManyRelation,
+    modelClass: path.join(__dirname, '..', 'version/version.model'),
+    join: {
+      from: 'projects.id',
+      to: 'versions.project_id'
     }
   }
 };
