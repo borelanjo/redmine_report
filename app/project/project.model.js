@@ -1,16 +1,7 @@
-var Model = require('objection').Model;
 var path = require('path');
-var _ = require('lodash');
+var Entity = require(path.join(__dirname, '..', 'entity/entity.model'));
 
-/**
- * @extends Model
- * @constructor
- */
-function ProjectModel() {
-  Model.apply(this, arguments);
-}
-
-Model.extend(ProjectModel);
+ProjectModel = Entity;
 module.exports = ProjectModel;
 
 // Table name is the only required property.
@@ -64,14 +55,14 @@ ProjectModel.jsonSchema = {
     },
     default_version_id: {
       type: 'integer'
-    },
+    }
   }
 };
 
 // This object defines the relations to other models.
 ProjectModel.relationMappings = {
   parent: {
-    relation: Model.BelongsToOneRelation,
+    relation: ProjectModel.model.BelongsToOneRelation,
     // The related model. This can be either a Model
     // subclass constructor or an absolute file path
     // to a module that exports one. We use the file
@@ -85,7 +76,7 @@ ProjectModel.relationMappings = {
 
   },
   children: {
-    relation: Model.HasManyRelation,
+    relation: ProjectModel.model.HasManyRelation,
     modelClass: __dirname + '/project.model',
     join: {
       from: 'projects.id',
@@ -127,22 +118,4 @@ ProjectModel.relationMappings = {
       to: 'versions.project_id'
     }
   }
-};
-
-//converte pra snakeCase ('fooBar' => 'foo_bar')
-ProjectModel.prototype.$formatDatabaseJson = function(json) {
-  json = Model.prototype.$formatDatabaseJson.call(this, json);
-
-  return _.mapKeys(json, function(value, key) {
-    return _.snakeCase(key);
-  });
-};
-
-//converte pra snakeCase ('foo_bar' => 'fooBar')
-ProjectModel.prototype.$parseDatabaseJson = function(json) {
-  json = _.mapKeys(json, function(value, key) {
-    return _.camelCase(key);
-  });
-
-  return Model.prototype.$parseDatabaseJson.call(this, json);
 };
