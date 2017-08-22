@@ -47,10 +47,23 @@ describe('projectDao', function() {
         if (err) {
           done(err);
         } else {
-          console.log('project', project);
           expect(project, 'Lista de projetos está indefinida').to.exist;
           expect(project).to.be.a('object');
           expect(project.id, 'Id não pode ser nulo').to.not.be.null;
+          done();
+        }
+
+      });
+
+    });
+    it('Deve ter propriedades em camelCase', function(done) {
+      projectDao.findById(1, null, function(err, project) {
+        if (err) {
+          done(err);
+        } else {
+
+          expect(project).to.has.property('isPublic');
+          expect(project).to.has.property('parentId');
           done();
         }
 

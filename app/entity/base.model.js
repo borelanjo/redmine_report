@@ -1,6 +1,9 @@
 /**
  * Created by edrickrenan on 18/08/17.
  */
+
+'use strict';
+
 const Model = require('objection').Model;
 var _ = require('lodash');
 
