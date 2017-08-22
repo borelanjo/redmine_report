@@ -1,25 +1,20 @@
 /**
  * Created by edrickrenan on 18/08/17.
  */
-var Model = require('objection').Model;
+const Model = require('objection').Model;
 var _ = require('lodash');
 
 /**
  * @extends Model
  * @constructor
  */
-function EntityModel() {
-  Model.apply(this, arguments);
+class BaseModel extends Model {
+
 }
 
-Model.extend(EntityModel);
-module.exports = EntityModel;
-
-// atribui o objeto Model que será utilizado para o mapeamento das sub-classes.
-EntityModel.model = Model;
 
 //converte pra snakeCase ('fooBar' => 'foo_bar')
-EntityModel.prototype.$formatDatabaseJson = function(json) {
+BaseModel.prototype.$formatDatabaseJson = function(json) {
   json = Model.prototype.$formatDatabaseJson.call(this, json);
 
   return _.mapKeys(json, function(value, key) {
@@ -28,10 +23,12 @@ EntityModel.prototype.$formatDatabaseJson = function(json) {
 };
 
 //converte pra snakeCase ('foo_bar' => 'fooBar')
-EntityModel.prototype.$parseDatabaseJson = function(json) {
+BaseModel.prototype.$parseDatabaseJson = function(json) {
   json = _.mapKeys(json, function(value, key) {
     return _.camelCase(key);
   });
 
   return Model.prototype.$parseDatabaseJson.call(this, json);
 };
+
+module.exports = BaseModel;

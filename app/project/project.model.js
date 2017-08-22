@@ -1,11 +1,12 @@
 'use strict';
 
-const Model = require('objection').Model;
 const path = require('path');
 const _ = require('lodash');
 
+const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
 
-class Project extends Model {
+
+class Project extends BaseModel {
 
   // Table name is the only required property.
   static get tableName() {
@@ -70,7 +71,7 @@ class Project extends Model {
   static get relationMappings() {
     return {
       parent: {
-        relation: Model.BelongsToOneRelation,
+        relation: BaseModel.BelongsToOneRelation,
         // The related model. This can be either a Model
         // subclass constructor or an absolute file path
         // to a module that exports one. We use the file
@@ -84,7 +85,7 @@ class Project extends Model {
 
       },
       children: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: __dirname + '/project.model',
         join: {
           from: 'projects.id',
@@ -101,7 +102,7 @@ class Project extends Model {
         }
       },
       members: {
-        relation: Model.ManyToManyRelation,
+        relation: BaseModel.ManyToManyRelation,
         modelClass: path.join(__dirname, '..', 'user/user.model'),
         join: {
           from: 'projects.id',
@@ -119,7 +120,7 @@ class Project extends Model {
         }
       },
       versions: {
-        relation: Model.HasManyRelation,
+        relation: BaseModel.HasManyRelation,
         modelClass: path.join(__dirname, '..', 'version/version.model'),
         join: {
           from: 'projects.id',

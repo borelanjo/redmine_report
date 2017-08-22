@@ -47,6 +47,7 @@ describe('projectDao', function() {
         if (err) {
           done(err);
         } else {
+          console.log('project', project);
           expect(project, 'Lista de projetos está indefinida').to.exist;
           expect(project).to.be.a('object');
           expect(project.id, 'Id não pode ser nulo').to.not.be.null;

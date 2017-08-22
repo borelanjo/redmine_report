@@ -1,9 +1,10 @@
-const Model = require('objection').Model;
 const path = require('path');
 const _ = require('lodash');
 
+const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
 
-class Member extends Model {
+
+class Member extends BaseModel {
 
   // Table name is the only required property.
   static get tableName() {
@@ -41,7 +42,7 @@ class Member extends Model {
   static get relationMappings() {
     return {
       user: {
-        relation: Model.HasOneRelation,
+        relation: BaseModel.HasOneRelation,
         modelClass: path.join(__dirname, '..', 'user/user.model'),
         join: {
           from: 'members.user_id',
@@ -49,7 +50,7 @@ class Member extends Model {
         }
       },
       project: {
-        relation: Model.HasOneRelation,
+        relation: BaseModel.HasOneRelation,
         modelClass: path.join(__dirname, '..', 'project/project.model'),
         join: {
           from: 'members.project_id',
@@ -59,23 +60,5 @@ class Member extends Model {
     };
   }
 }
-
-//converte pra snakeCase ('fooBar' => 'foo_bar')
-Member.prototype.$formatDatabaseJson = function(json) {
-  json = Model.prototype.$formatDatabaseJson.call(this, json);
-
-  return _.mapKeys(json, function(value, key) {
-    return _.snakeCase(key);
-  });
-};
-
-//converte pra snakeCase ('foo_bar' => 'fooBar')
-Member.prototype.$parseDatabaseJson = function(json) {
-  json = _.mapKeys(json, function(value, key) {
-    return _.camelCase(key);
-  });
-
-  return Model.prototype.$parseDatabaseJson.call(this, json);
-};
 
 module.exports = Member;

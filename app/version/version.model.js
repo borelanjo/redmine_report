@@ -1,14 +1,15 @@
 'use strict';
 
-const Model = require('objection').Model;
 const path = require('path');
 const _ = require('lodash');
+
+const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
 
 /**
  * @extends Model
  * @constructor
  */
-class Version extends Model {
+class Version extends BaseModel {
 
   // Table name is the only required property.
   static get tableName() {
@@ -61,7 +62,7 @@ class Version extends Model {
   static get relationMappings() {
     return {
       project: {
-        relation: Model.HasOneRelation,
+        relation: BaseModel.HasOneRelation,
         modelClass: path.join(__dirname, '..', 'project/project.model'),
         join: {
           from: 'versions.project_id',
@@ -72,24 +73,5 @@ class Version extends Model {
   }
 
 }
-
-
-//converte pra snakeCase ('fooBar' => 'foo_bar')
-Version.prototype.$formatDatabaseJson = function(json) {
-  json = Model.prototype.$formatDatabaseJson.call(this, json);
-
-  return _.mapKeys(json, function(value, key) {
-    return _.snakeCase(key);
-  });
-};
-
-//converte pra snakeCase ('foo_bar' => 'fooBar')
-Version.prototype.$parseDatabaseJson = function(json) {
-  json = _.mapKeys(json, function(value, key) {
-    return _.camelCase(key);
-  });
-
-  return Model.prototype.$parseDatabaseJson.call(this, json);
-};
 
 module.exports = Version;

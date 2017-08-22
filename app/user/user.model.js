@@ -1,13 +1,15 @@
 'use strict';
 
-const Model = require('objection').Model;
 const _ = require('lodash');
+const path = require('path');
+
+const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
 
 /**
  * @extends Model
  * @constructor
  */
-class User extends Model {
+class User extends BaseModel {
 
   // Table name is the only required property.
   static get tableName() {
@@ -81,25 +83,5 @@ class User extends Model {
   }
 
 }
-
-
-
-//converte pra snakeCase ('fooBar' => 'foo_bar')
-User.prototype.$formatDatabaseJson = function(json) {
-  json = Model.prototype.$formatDatabaseJson.call(this, json);
-
-  return _.mapKeys(json, function(value, key) {
-    return _.snakeCase(key);
-  });
-};
-
-//converte pra snakeCase ('foo_bar' => 'fooBar')
-User.prototype.$parseDatabaseJson = function(json) {
-  json = _.mapKeys(json, function(value, key) {
-    return _.camelCase(key);
-  });
-
-  return Model.prototype.$parseDatabaseJson.call(this, json);
-};
 
 module.exports = User;
