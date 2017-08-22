@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const path = require('path');
 
-const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
+const BaseModel = require(path.join(__dirname, '..', 'base/base.model'));
 
 /**
  * @extends Model

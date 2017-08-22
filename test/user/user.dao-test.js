@@ -1,29 +1,31 @@
-var objection = require('objection');
-var Knex = require('knex');
+const objection = require('objection');
+const Knex = require('knex');
 const uuidV1 = require('uuid/v1');
 
-var knexConfig = require('./../../knexfile');
-var Model = require('objection').Model;
+const knexConfig = require('./../../knexfile');
+const Model = require('objection').Model;
 
-var chai = require('chai');
+const chai = require('chai');
 
-var expect = chai.expect;
-var assert = chai.assert;
-var sinon = require('sinon');
-var userDao = require('./../../app/user/user.dao');
+const expect = chai.expect;
+const assert = chai.assert;
+const sinon = require('sinon');
+const UserDao = require('./../../app/user/user.dao');
 
 /** Inicializa knex. */
-var knex = Knex(knexConfig.development);
+const knex = Knex(knexConfig.development);
 
 /**  Bind all Models to a knex instance. If you only have one database in
 your server this is all you have to do. For multi database systems, see
 the Model.bindKnex method. */
 Model.knex(knex);
 
+var userDao = new UserDao();
+
 describe('userDao', function() {
   describe('findAll', function() {
     it('Deve ser obtido a lista de todos os usuários', function(done) {
-      userDao.findAll(function(err, users) {
+      userDao.findAll(null, function(err, users) {
         if (err) {
           done(err);
         } else {
@@ -42,7 +44,7 @@ describe('userDao', function() {
 
   describe('findById', function() {
     it('Deve ser obtido o usuário pelo número do seu id', function(done) {
-      userDao.findById(1, function(err, user) {
+      userDao.findById(1, null, function(err, user) {
         if (err) {
           done(err);
         } else {
@@ -56,7 +58,7 @@ describe('userDao', function() {
 
     });
     it('Caso não seja passado um ID deve ser retornado um erro', function(done) {
-      userDao.findById(null, function(err, user) {
+      userDao.findById(null, null, function(err, user) {
         if (err) {
           done();
         }
@@ -84,7 +86,7 @@ describe('userDao', function() {
 
     });
     it('Caso não seja passado um ID deve ser retornado um erro', function(done) {
-      userDao.findById(null, function(err, user) {
+      userDao.findByLogin(null, function(err, user) {
         if (err) {
           done();
         }

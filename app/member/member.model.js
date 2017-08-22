@@ -1,7 +1,9 @@
+'use strict';
+
 const path = require('path');
 const _ = require('lodash');
 
-const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
+const BaseModel = require(path.join(__dirname, '..', 'base/base.model'));
 
 
 class Member extends BaseModel {
