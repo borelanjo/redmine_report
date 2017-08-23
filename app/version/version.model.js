@@ -62,7 +62,7 @@ class Version extends BaseModel {
   static get relationMappings() {
     return {
       project: {
-        relation: BaseModel.HasOneRelation,
+        relation: this.HasOneRelation,
         modelClass: path.join(__dirname, '..', 'project/project.model'),
         join: {
           from: 'versions.project_id',

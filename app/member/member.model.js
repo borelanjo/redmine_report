@@ -44,7 +44,7 @@ class Member extends BaseModel {
   static get relationMappings() {
     return {
       user: {
-        relation: BaseModel.HasOneRelation,
+        relation: this.HasOneRelation,
         modelClass: path.join(__dirname, '..', 'user/user.model'),
         join: {
           from: 'members.user_id',
@@ -52,7 +52,7 @@ class Member extends BaseModel {
         }
       },
       project: {
-        relation: BaseModel.HasOneRelation,
+        relation: this.HasOneRelation,
         modelClass: path.join(__dirname, '..', 'project/project.model'),
         join: {
           from: 'members.project_id',

@@ -1,5 +1,5 @@
-var objection = require('objection');
-var Knex = require('knex');
+const objection = require('objection');
+const Knex = require('knex');
 const uuidV1 = require('uuid/v1');
 
 const ProjectDao = require('./../../app/project/project.dao');
@@ -15,7 +15,7 @@ const sinon = require('sinon');
 /** Inicializa knex. */
 const knex = Knex(knexConfig.development);
 
-var projectDao = new ProjectDao();
+const projectDao = new ProjectDao();
 
 
 
@@ -72,8 +72,8 @@ describe('projectDao', function() {
     });
 
     it('Se for passado a opção eager() deve vir os objetos relacionados a projeto', function(done) {
-      var option = {
-        eager: '[members,versions]'
+      const option = {
+          eager: '[members,versions]'
       };
       projectDao.findById(1, option, function(err, project) {
         if (err) {

@@ -20,7 +20,7 @@ const knex = Knex(knexConfig.development);
  the Model.bindKnex method. */
 Model.knex(knex);
 
-var memberDao = new MemberDao();
+const memberDao = new MemberDao();
 
 describe('memberDao', function() {
   describe('findAll', function() {
@@ -40,14 +40,14 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
-      var option = {
-        eager: 'project'
+      const option = {
+          eager: 'project'
       };
       memberDao.findAll(option, function(err, members) {
         if (err) {
           done(err);
         } else {
-          var firstMember = members[0];
+          const firstMember = members[0];
           expect(firstMember.project, 'Um Membro precisa estar associado com um projeto').to.exist;
           expect(firstMember.project.name).to.be.equal('[Example Project 1]');
           done();
@@ -57,14 +57,14 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(user) deve vir o usuário relacionado que o membro representa', function(done) {
-      var option = {
-        eager: 'user'
+      const option = {
+          eager: 'user'
       };
       memberDao.findAll(option, function(err, members) {
         if (err) {
           done(err);
         } else {
-          var firstMember = members[0];
+          const firstMember = members[0];
           expect(firstMember.user, 'Um membro precisa estar relacionado com um usuário');
           expect(firstMember.user.firstname).to.be.equal('Jonh Snow');
           expect(firstMember.user.lastname).to.be.equal('King of North');
@@ -74,14 +74,14 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(\'[user,project]\') deve vir o usuário e o projeto relacionado ao membro representado', function(done) {
-      var option = {
-        eager: '[user,project]'
+      const option = {
+          eager: '[user,project]'
       };
       memberDao.findAll(option, function(err, members) {
         if (err) {
           done(err);
         } else {
-          var firstMember = members[0];
+          const firstMember = members[0];
           expect(firstMember.user, 'Um membro precisa estar relacionado com um usuário');
           expect(firstMember.user.firstname).to.be.equal('Jonh Snow');
           expect(firstMember.user.lastname).to.be.equal('King of North');
@@ -117,8 +117,8 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
-      var option = {
-        eager: 'project'
+      const option = {
+          eager: 'project'
       };
       memberDao.findById(1, option, function(err, member) {
         if (err) {
@@ -134,8 +134,8 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(user) deve vir o usuário relacionado que o membro representa', function(done) {
-      var option = {
-        eager: 'user'
+      const option = {
+          eager: 'user'
       };
       memberDao.findById(1, option, function(err, member) {
         if (err) {
@@ -150,8 +150,8 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(\'[user,project]\') deve vir o usuário e o projeto relacionado ao membro representado', function(done) {
-      var option = {
-        eager: '[user,project]'
+      const option = {
+          eager: '[user,project]'
       };
       memberDao.findById(1, option, function(err, member) {
         if (err) {

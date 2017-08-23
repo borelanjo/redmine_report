@@ -13,14 +13,14 @@ const sinon = require('sinon');
 const VersionDao = require('./../../app/version/version.dao');
 
 /** Inicializa knex. */
-var knex = Knex(knexConfig.development);
+const knex = Knex(knexConfig.development);
 
 /**  Bind all Models to a knex instance. If you only have one database in
  your server this is all you have to do. For multi database systems, see
  the Model.bindKnex method. */
 Model.knex(knex);
 
-var versionDao = new VersionDao();
+const versionDao = new VersionDao();
 
 describe('versionDao', function() {
   describe('findAll', function() {
@@ -40,14 +40,14 @@ describe('versionDao', function() {
     });
 
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
-      var option = {
-        eager: 'project'
+      const option = {
+          eager: 'project'
       };
       versionDao.findAll(option, function(err, versions) {
         if (err) {
           done(err);
         } else {
-          var firstVersion = versions[0];
+          const firstVersion = versions[0];
           expect(firstVersion.project, 'A Versão precisa ter um projeto relacionado').to.exist;
           expect(firstVersion.project.name).to.be.equal('[Example Project 1]');
           done();
@@ -80,8 +80,8 @@ describe('versionDao', function() {
       });
     });
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
-      var option = {
-        eager: 'project'
+      const option = {
+          eager: 'project'
       };
       versionDao.findById(1, option, function(err, version) {
         if (err) {

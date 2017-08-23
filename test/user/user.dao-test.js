@@ -20,7 +20,7 @@ your server this is all you have to do. For multi database systems, see
 the Model.bindKnex method. */
 Model.knex(knex);
 
-var userDao = new UserDao();
+const userDao = new UserDao();
 
 describe('userDao', function() {
   describe('findAll', function() {
@@ -70,7 +70,7 @@ describe('userDao', function() {
 
   describe('findByLogin', function() {
     it('Deve ser obtido os dados do usuário pelo seu login', function(done) {
-      var username = 'test';
+      const username = 'test';
       userDao.findByLogin(username, function(err, user) {
         if (err) {
           done(err);
@@ -98,8 +98,8 @@ describe('userDao', function() {
 
   describe('isPasswordCorrect', function() {
     it('Deve retornar true se a senha for correta', function(done) {
-      var username = 'test';
-      var password = 'test1234';
+      const username = 'test';
+      const password = 'test1234';
       userDao.isPasswordCorrect(username, password, function(err, isCorrect) {
         if (err) {
           done(err);
@@ -111,8 +111,8 @@ describe('userDao', function() {
       });
     });
     it('Deve retornar false se a senha for errada', function(done) {
-      var username = 'test';
-      var password = '1234';
+      const username = 'test';
+      const password = '1234';
       userDao.isPasswordCorrect(username, password, function(err, isCorrect) {
         if (err) {
           done(err);
@@ -125,8 +125,8 @@ describe('userDao', function() {
     });
 
     it('Deve retornar false se o usuário não existir', function(done) {
-      var username = '1234';
-      var password = '1234';
+      const username = '1234';
+      const password = '1234';
       userDao.isPasswordCorrect(username, password, function(err, isCorrect) {
         if (err) {
           done(err);
@@ -142,11 +142,11 @@ describe('userDao', function() {
 
   describe('hashPassword', function() {
     it('Deve gerar um hash em SHA1 baseado em um salt', function() {
-      var username = 'test';
-      var password = 'test1234';
-      var hashed = '1c144e0bc0ed0d0afa7668206fcaa440518c521d';
-      var salt = 'eb15da9ca7869dc27f363c2b3993ed72';
-      var newHash = userDao.hashPassword(password, salt);
+      const username = 'test';
+      const password = 'test1234';
+      const hashed = '1c144e0bc0ed0d0afa7668206fcaa440518c521d';
+      const salt = 'eb15da9ca7869dc27f363c2b3993ed72';
+      const newHash = userDao.hashPassword(password, salt);
       expect(newHash, 'Lista de usuários está indefinida').to.be.equal('1c144e0bc0ed0d0afa7668206fcaa440518c521d');
 
 
