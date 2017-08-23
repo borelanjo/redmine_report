@@ -5,7 +5,7 @@
 
 'use strict';
 
-var VersionModel = require('./version.model.js');
+const VersionModel = require('./version.model.js');
 
 const path = require('path');
 const BaseDao = require(path.join(__dirname, '..', 'base/base.dao'));
