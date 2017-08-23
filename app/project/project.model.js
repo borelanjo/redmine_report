@@ -3,7 +3,7 @@
 const path = require('path');
 const _ = require('lodash');
 
-const BaseModel = require(path.join(__dirname, '..', 'entity/base.model'));
+const BaseModel = require(path.join(__dirname, '..', 'base/base.model'));
 
 
 class Project extends BaseModel {
@@ -71,7 +71,7 @@ class Project extends BaseModel {
   static get relationMappings() {
     return {
       parent: {
-        relation: BaseModel.BelongsToOneRelation,
+        relation: this.BelongsToOneRelation,
         // The related model. This can be either a Model
         // subclass constructor or an absolute file path
         // to a module that exports one. We use the file
@@ -85,7 +85,7 @@ class Project extends BaseModel {
 
       },
       children: {
-        relation: BaseModel.HasManyRelation,
+        relation: this.HasManyRelation,
         modelClass: __dirname + '/project.model',
         join: {
           from: 'projects.id',
@@ -102,7 +102,7 @@ class Project extends BaseModel {
         }
       },
       members: {
-        relation: BaseModel.ManyToManyRelation,
+        relation: this.ManyToManyRelation,
         modelClass: path.join(__dirname, '..', 'user/user.model'),
         join: {
           from: 'projects.id',
@@ -120,7 +120,7 @@ class Project extends BaseModel {
         }
       },
       versions: {
-        relation: BaseModel.HasManyRelation,
+        relation: this.HasManyRelation,
         modelClass: path.join(__dirname, '..', 'version/version.model'),
         join: {
           from: 'projects.id',

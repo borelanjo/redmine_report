@@ -1,19 +1,23 @@
-var objection = require('objection');
-var Knex = require('knex');
+const objection = require('objection');
+const Knex = require('knex');
 const uuidV1 = require('uuid/v1');
 
-var knexConfig = require('./../../knexfile');
-var Model = require('objection').Model;
+const ProjectDao = require('./../../app/project/project.dao');
+const knexConfig = require('./../../knexfile');
+const Model = require('objection').Model;
 
-var chai = require('chai');
+const chai = require('chai');
 
-var expect = chai.expect;
-var assert = chai.assert;
-var sinon = require('sinon');
-var projectDao = require('./../../app/project/project.dao');
+const expect = chai.expect;
+const assert = chai.assert;
+const sinon = require('sinon');
 
 /** Inicializa knex. */
-var knex = Knex(knexConfig.development);
+const knex = Knex(knexConfig.development);
+
+const projectDao = new ProjectDao();
+
+
 
 /**  Bind all Models to a knex instance. If you only have one database in
 your server this is all you have to do. For multi database systems, see
@@ -24,6 +28,7 @@ Model.knex(knex);
 describe('projectDao', function() {
   describe('findAll', function() {
     it('Deve ser obtido a lista de todos os projetos', function(done) {
+
       projectDao.findAll(true, function(err, projects) {
         if (err) {
           done(err);
@@ -81,8 +86,8 @@ describe('projectDao', function() {
     });
 
     it('Se for passado a opção eager() deve vir os objetos relacionados a projeto', function(done) {
-      var option = {
-        eager: '[members,versions]'
+      const option = {
+          eager: '[members,versions]'
       };
       projectDao.findById(1, option, function(err, project) {
         if (err) {

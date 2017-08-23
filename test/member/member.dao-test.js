@@ -1,24 +1,26 @@
-var objection = require('objection');
-var Knex = require('knex');
+const objection = require('objection');
+const Knex = require('knex');
 const uuidV1 = require('uuid/v1');
 
-var knexConfig = require('./../../knexfile');
-var Model = require('objection').Model;
+const knexConfig = require('./../../knexfile');
+const Model = require('objection').Model;
 
-var chai = require('chai');
+const chai = require('chai');
 
-var expect = chai.expect;
-var assert = chai.assert;
-var sinon = require('sinon');
-var memberDao = require('./../../app/member/member.dao');
+const expect = chai.expect;
+const assert = chai.assert;
+const sinon = require('sinon');
+const MemberDao = require('./../../app/member/member.dao');
 
 /** Inicializa knex. */
-var knex = Knex(knexConfig.development);
+const knex = Knex(knexConfig.development);
 
 /**  Bind all Models to a knex instance. If you only have one database in
  your server this is all you have to do. For multi database systems, see
  the Model.bindKnex method. */
 Model.knex(knex);
+
+const memberDao = new MemberDao();
 
 describe('memberDao', function() {
   describe('findAll', function() {
@@ -38,14 +40,14 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
-      var option = {
-        eager: 'project'
+      const option = {
+          eager: 'project'
       };
       memberDao.findAll(option, function(err, members) {
         if (err) {
           done(err);
         } else {
-          var firstMember = members[0];
+          const firstMember = members[0];
           expect(firstMember.project, 'Um Membro precisa estar associado com um projeto').to.exist;
           expect(firstMember.project.name).to.be.equal('[Example Project 1]');
           done();
@@ -55,14 +57,14 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(user) deve vir o usuário relacionado que o membro representa', function(done) {
-      var option = {
-        eager: 'user'
+      const option = {
+          eager: 'user'
       };
       memberDao.findAll(option, function(err, members) {
         if (err) {
           done(err);
         } else {
-          var firstMember = members[0];
+          const firstMember = members[0];
           expect(firstMember.user, 'Um membro precisa estar relacionado com um usuário');
           expect(firstMember.user.firstname).to.be.equal('Jonh Snow');
           expect(firstMember.user.lastname).to.be.equal('King of North');
@@ -72,14 +74,14 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(\'[user,project]\') deve vir o usuário e o projeto relacionado ao membro representado', function(done) {
-      var option = {
-        eager: '[user,project]'
+      const option = {
+          eager: '[user,project]'
       };
       memberDao.findAll(option, function(err, members) {
         if (err) {
           done(err);
         } else {
-          var firstMember = members[0];
+          const firstMember = members[0];
           expect(firstMember.user, 'Um membro precisa estar relacionado com um usuário');
           expect(firstMember.user.firstname).to.be.equal('Jonh Snow');
           expect(firstMember.user.lastname).to.be.equal('King of North');
@@ -115,8 +117,8 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
-      var option = {
-        eager: 'project'
+      const option = {
+          eager: 'project'
       };
       memberDao.findById(1, option, function(err, member) {
         if (err) {
@@ -132,8 +134,8 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(user) deve vir o usuário relacionado que o membro representa', function(done) {
-      var option = {
-        eager: 'user'
+      const option = {
+          eager: 'user'
       };
       memberDao.findById(1, option, function(err, member) {
         if (err) {
@@ -148,8 +150,8 @@ describe('memberDao', function() {
     });
 
     it('Se for passado a opção eager(\'[user,project]\') deve vir o usuário e o projeto relacionado ao membro representado', function(done) {
-      var option = {
-        eager: '[user,project]'
+      const option = {
+          eager: '[user,project]'
       };
       memberDao.findById(1, option, function(err, member) {
         if (err) {

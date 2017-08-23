@@ -3,57 +3,17 @@
  * @author edrickrenan
  */
 
-var versionModel = require('./version.model.js');
+'use strict';
 
-var VersionDao = {
-  findAll: findAll,
-  findById: findById
-};
+const VersionModel = require('./version.model.js');
 
+const path = require('path');
+const BaseDao = require(path.join(__dirname, '..', 'base/base.dao'));
+
+class VersionDao extends BaseDao {
+  constructor() {
+    super(VersionModel);
+  }
+
+}
 module.exports = VersionDao;
-
-function findAll(option, callback) {
-  var queryBuilder = versionModel
-    .query()
-    .orderBy('id');
-
-  for (var variable in option) {
-    if (option.hasOwnProperty(variable)) {
-      queryBuilder[variable](option[variable])
-    }
-  }
-  queryBuilder
-    .then(function(versions) {
-      callback(null, versions);
-    })
-    .catch(function(err) {
-      callback(err);
-    });
-}
-
-function findById(id, option, callback) {
-
-  if (id) {
-    var queryBuilder = versionModel
-      .query()
-      .where('id', id)
-      .orderBy('id')
-      .first();
-
-    for (var variable in option) {
-      if (option.hasOwnProperty(variable)) {
-        queryBuilder[variable](option[variable])
-      }
-    }
-
-    queryBuilder
-      .then(function(projects) {
-        callback(null, projects);
-      })
-      .catch(function(err) {
-        callback(err);
-      });
-  } else {
-    callback(new Error('Id can\'t be null'));
-  }
-}

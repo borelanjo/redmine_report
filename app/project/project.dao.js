@@ -3,69 +3,43 @@
  * @author borelanjo
  */
 
+'use strict';
 
-var objection = require('objection');
-var arrayToTree = require('array-to-tree');
-
-var projectModel = require('./project.model.js');
-
-var ProjectDao = {
-  findAll: findAll,
-  findById: findById
-};
-
-module.exports = ProjectDao;
-
-function findAll(asTree, callback) {
-
-  projectModel
-    .query()
-    .orderBy('id')
-    .then(function(projects) {
-
-      if (asTree) {
-        callback(null, arrayToTree(projects, {
-          parentProperty: 'parentId',
-          customID: 'id'
-        }));
-      } else {
-        callback(null, projects);
-      }
+const objection = require('objection');
+const arrayToTree = require('array-to-tree');
+const path = require('path');
 
 
+const BaseDao = require(path.join(__dirname, '..', 'base/base.dao'));
 
-    })
-    .catch(function(err) {
-      callback(err);
-    });
+const ProjectModel = require('./project.model.js');
 
-}
+class ProjectDao extends BaseDao {
 
-function findById(id, option, callback) {
+  constructor() {
+    super(ProjectModel);
+  }
 
-  if (id) {
-    var queryBuilder = projectModel
+  findAll(asTree, callback) {
+    this.model
       .query()
-      .where('id', id)
       .orderBy('id')
-      .first()
-
-    for (var variable in option) {
-      if (option.hasOwnProperty(variable)) {
-        queryBuilder[variable](option[variable])
-      }
-    }
-
-    queryBuilder
       .then(function(projects) {
-        callback(null, projects);
+
+        if (asTree) {
+          callback(null, arrayToTree(projects, {
+            parentProperty: 'parentId',
+            customID: 'id'
+          }));
+        } else {
+          callback(null, projects);
+        }
       })
       .catch(function(err) {
         callback(err);
       });
-  } else {
-    callback(new Error('Id can\'t be null'));
   }
 
 
 }
+module.exports = ProjectDao;

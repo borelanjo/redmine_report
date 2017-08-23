@@ -3,94 +3,61 @@
  * @author borelanjo
  */
 
-var sha1 = require('sha1');
+'use strict';
 
-var objection = require('objection');
+const sha1 = require('sha1');
 
-var userModel = require('./user.model.js');
+const objection = require('objection');
 
-var UserDao = {
-  findAll: findAll,
-  findById: findById,
-  findByLogin: findByLogin,
-  isPasswordCorrect: isPasswordCorrect,
-  hashPassword: hashPassword
-};
+const UserModel = require('./user.model.js');
+
+const path = require('path');
+const BaseDao = require(path.join(__dirname, '..', 'base/base.dao'));
+
+class UserDao extends BaseDao {
+  constructor() {
+    super(UserModel);
+  }
+
+  findByLogin(login, callback) {
+
+    if (login) {
+      this.model
+        .query()
+        .where('login', login)
+        .first()
+        .then(function(user) {
+          callback(null, user);
+        })
+        .catch(function(err) {
+          callback(err);
+        });
+    } else {
+      callback(new Error('Login can\'t be null'));
+    }
+  }
+
+  isPasswordCorrect(login, password, callback) {
+    //Como é uma função assicrona e uma closure, o this tem outro contexto dentro do findByLogin
+    let self = this;
+    this.findByLogin(login, function(err, user) {
+
+      if (err) {
+        callback(err);
+      } else {
+        if (user) {
+          let isPasswordCorrect = self.hashPassword(password, user.salt) === user.hashedPassword;
+          callback(null, isPasswordCorrect);
+        } else {
+          callback(null, false);
+        }
+      }
+    });
+  }
+
+  hashPassword(password, salt) {
+    return sha1(salt + sha1(password));
+  }
+}
 
 module.exports = UserDao;
-
-function findAll(callback) {
-
-  userModel
-    .query()
-    .orderBy('id')
-    .then(function(users) {
-      callback(null, users);
-    })
-    .catch(function(err) {
-      callback(err);
-    });
-
-}
-
-function findById(id, callback) {
-
-  if (id) {
-    userModel
-      .query()
-      .where('id', id)
-      .first()
-      .then(function(users) {
-        callback(null, users);
-      })
-      .catch(function(err) {
-        callback(err);
-      });
-  } else {
-    callback(new Error('Id can\'t be null'));
-  }
-
-
-}
-
-function findByLogin(login, callback) {
-
-  if (login) {
-    userModel
-      .query()
-      .where('login', login)
-      .first()
-      .then(function(user) {
-        callback(null, user);
-      })
-      .catch(function(err) {
-        callback(err);
-      });
-  } else {
-    callback(new Error('Login can\'t be null'));
-  }
-
-
-}
-
-function isPasswordCorrect(login, password, callback) {
-  findByLogin(login, function(err, user) {
-
-    if (err) {
-      callback(err);
-    } else {
-      if (user) {
-        var isPasswordCorrect = hashPassword(password, user.salt) === user.hashedPassword;
-        callback(null, isPasswordCorrect);
-      } else {
-        callback(null, false);
-      }
-    }
-  });
-}
-
-function hashPassword(password, salt) {
-  var hash = sha1(salt + sha1(password));
-  return hash;
-
-}
