@@ -13,25 +13,23 @@ var _ = require('lodash');
  */
 class BaseModel extends Model {
 
+  //converte pra snakeCase ('fooBar' => 'foo_bar')
+  $formatDatabaseJson(json) {
+    json = super.$formatDatabaseJson.call(this, json);
+
+    return _.mapKeys(json, function(value, key) {
+      return _.snakeCase(key);
+    });
+  };
+
+  //converte pra snakeCase ('foo_bar' => 'fooBar')
+  $parseDatabaseJson(json) {
+    json = _.mapKeys(json, function(value, key) {
+      return _.camelCase(key);
+    });
+
+    return super.$parseDatabaseJson.call(this, json);
+  };
 }
-
-
-//converte pra snakeCase ('fooBar' => 'foo_bar')
-BaseModel.prototype.$formatDatabaseJson = function(json) {
-  json = Model.prototype.$formatDatabaseJson.call(this, json);
-
-  return _.mapKeys(json, function(value, key) {
-    return _.snakeCase(key);
-  });
-};
-
-//converte pra snakeCase ('foo_bar' => 'fooBar')
-BaseModel.prototype.$parseDatabaseJson = function(json) {
-  json = _.mapKeys(json, function(value, key) {
-    return _.camelCase(key);
-  });
-
-  return Model.prototype.$parseDatabaseJson.call(this, json);
-};
 
 module.exports = BaseModel;
