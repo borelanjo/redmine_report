@@ -15,11 +15,11 @@ class BaseDao {
   }
 
   findAll(option, callback) {
-    var queryBuilder = this.model
+    let queryBuilder = this.model
       .query()
       .orderBy('id');
 
-    for (var variable in option) {
+    for (let variable in option) {
       if (option.hasOwnProperty(variable)) {
         queryBuilder[variable](option[variable])
       }
@@ -36,13 +36,13 @@ class BaseDao {
   findById(id, option, callback) {
 
     if (id) {
-      var queryBuilder = this.model
+      let queryBuilder = this.model
         .query()
         .where('id', id)
         .orderBy('id')
-        .first()
+        .first();
 
-      for (var variable in option) {
+      for (let variable in option) {
         if (option.hasOwnProperty(variable)) {
           queryBuilder[variable](option[variable])
         }
@@ -58,10 +58,8 @@ class BaseDao {
     } else {
       callback(new Error('Id can\'t be null'));
     }
-
-
   }
 
-};
+}
 
 module.exports = BaseDao;

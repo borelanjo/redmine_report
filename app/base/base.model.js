@@ -5,7 +5,7 @@
 'use strict';
 
 const Model = require('objection').Model;
-var _ = require('lodash');
+const _ = require('lodash');
 
 /**
  * @extends Model

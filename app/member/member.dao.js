@@ -8,7 +8,7 @@
 const path = require('path');
 const BaseDao = require(path.join(__dirname, '..', 'base/base.dao'));
 
-var MemberModel = require('./member.model.js');
+const MemberModel = require('./member.model.js');
 
 class MemberDao extends BaseDao {
   constructor() {

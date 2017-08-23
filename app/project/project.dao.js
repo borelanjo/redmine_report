@@ -41,6 +41,5 @@ class ProjectDao extends BaseDao {
   }
 
 
-};
-
+}
 module.exports = ProjectDao;

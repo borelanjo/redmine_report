@@ -39,14 +39,14 @@ class UserDao extends BaseDao {
 
   isPasswordCorrect(login, password, callback) {
     //Como é uma função assicrona e uma closure, o this tem outro contexto dentro do findByLogin
-    var self = this;
+    let self = this;
     this.findByLogin(login, function(err, user) {
 
       if (err) {
         callback(err);
       } else {
         if (user) {
-          var isPasswordCorrect = self.hashPassword(password, user.salt) === user.hashedPassword;
+          let isPasswordCorrect = self.hashPassword(password, user.salt) === user.hashedPassword;
           callback(null, isPasswordCorrect);
         } else {
           callback(null, false);
@@ -56,11 +56,8 @@ class UserDao extends BaseDao {
   }
 
   hashPassword(password, salt) {
-    var hash = sha1(salt + sha1(password));
-    return hash;
-
+    return sha1(salt + sha1(password));
   }
-
-};
+}
 
 module.exports = UserDao;
