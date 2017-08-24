@@ -10,60 +10,6 @@ class Project extends BaseModel {
     return 'projects';
   }
 
-  // Optional JSON schema. This is not the database schema! Nothing is generated
-  // Based on this. This is only used for validation. Whenever a model instance
-  // Is created it is checked against this schema. http://json-schema.org/.
-  static get jsonSchema() {
-    return {
-      type: 'object',
-
-      properties: {
-        id: {
-          type: 'integer'
-        },
-        name: {
-          type: 'string'
-        },
-        description: {
-          type: 'string'
-        },
-        homepage: {
-          type: 'string'
-        },
-        is_public: {
-          type: 'boolean'
-        },
-        parent_id: {
-          type: 'integer'
-        },
-        created_on: {
-          type: 'date'
-        },
-        updated_on: {
-          type: 'date'
-        },
-        identifier: {
-          type: 'string'
-        },
-        status: {
-          type: 'integer'
-        },
-        lft: {
-          type: 'integer'
-        },
-        rgt: {
-          type: 'integer'
-        },
-        inherit_members: {
-          type: 'boolean'
-        },
-        default_version_id: {
-          type: 'integer'
-        }
-      }
-    }
-  }
-
   // This object defines the relations to other models.
   static get relationMappings() {
     return {

@@ -1,6 +1,4 @@
-const objection = require('objection');
 const Knex = require('knex');
-const uuidV1 = require('uuid/v1');
 
 const knexConfig = require('./../../knexfile');
 const Model = require('objection').Model;
@@ -8,8 +6,6 @@ const Model = require('objection').Model;
 const chai = require('chai');
 
 const expect = chai.expect;
-const assert = chai.assert;
-const sinon = require('sinon');
 const UserDao = require('./../../app/user/user.dao');
 
 /** Inicializa knex. */
@@ -58,7 +54,7 @@ describe('userDao', function() {
 
     });
     it('Caso não seja passado um ID deve ser retornado um erro', function(done) {
-      userDao.findById(null, null, function(err, user) {
+      userDao.findById(null, null, function(err) {
         if (err) {
           done();
         }
@@ -86,7 +82,7 @@ describe('userDao', function() {
 
     });
     it('Caso não seja passado um ID deve ser retornado um erro', function(done) {
-      userDao.findByLogin(null, function(err, user) {
+      userDao.findByLogin(null, function(err) {
         if (err) {
           done();
         }
@@ -142,9 +138,7 @@ describe('userDao', function() {
 
   describe('hashPassword', function() {
     it('Deve gerar um hash em SHA1 baseado em um salt', function() {
-      const username = 'test';
       const password = 'test1234';
-      const hashed = '1c144e0bc0ed0d0afa7668206fcaa440518c521d';
       const salt = 'eb15da9ca7869dc27f363c2b3993ed72';
       const newHash = UserDao.hashPassword(password, salt);
       expect(newHash, 'Lista de usuários está indefinida').to.be.equal('1c144e0bc0ed0d0afa7668206fcaa440518c521d');

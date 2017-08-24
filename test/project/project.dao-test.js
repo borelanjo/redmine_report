@@ -1,6 +1,4 @@
-const objection = require('objection');
 const Knex = require('knex');
-const uuidV1 = require('uuid/v1');
 
 const ProjectDao = require('./../../app/project/project.dao');
 const knexConfig = require('./../../knexfile');
@@ -9,8 +7,6 @@ const Model = require('objection').Model;
 const chai = require('chai');
 
 const expect = chai.expect;
-const assert = chai.assert;
-const sinon = require('sinon');
 
 /** Inicializa knex. */
 const knex = Knex(knexConfig.development);
@@ -76,7 +72,7 @@ describe('projectDao', function() {
 
     });
     it('Caso não seja passado um ID deve ser retornado um erro', function(done) {
-      projectDao.findById(null, null, function(err, project) {
+      projectDao.findById(null, null, function(err) {
         if (err) {
           done();
         }
@@ -87,7 +83,7 @@ describe('projectDao', function() {
 
     it('Se for passado a opção eager() deve vir os objetos relacionados a projeto', function(done) {
       const option = {
-          eager: '[members,versions]'
+        eager: '[members,versions]'
       };
       projectDao.findById(1, option, function(err, project) {
         if (err) {

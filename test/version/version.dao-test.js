@@ -1,6 +1,4 @@
-const objection = require('objection');
 const Knex = require('knex');
-const uuidV1 = require('uuid/v1');
 
 const knexConfig = require('./../../knexfile');
 const Model = require('objection').Model;
@@ -8,8 +6,6 @@ const Model = require('objection').Model;
 const chai = require('chai');
 
 const expect = chai.expect;
-const assert = chai.assert;
-const sinon = require('sinon');
 const VersionDao = require('./../../app/version/version.dao');
 
 /** Inicializa knex. */
@@ -41,7 +37,7 @@ describe('versionDao', function() {
 
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
       const option = {
-          eager: 'project'
+        eager: 'project'
       };
       versionDao.findAll(option, function(err, versions) {
         if (err) {
@@ -81,7 +77,7 @@ describe('versionDao', function() {
     });
     it('Se for passado a opção eager(project) deve vim o projeto relacionado', function(done) {
       const option = {
-          eager: 'project'
+        eager: 'project'
       };
       versionDao.findById(1, option, function(err, version) {
         if (err) {
