@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha test --recursive --watch"
+    "test": "mocha test --recursive --watch",
+    "lint": "eslint app/* test/* --fix"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/borelanjo/redmine_report#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^4.5.0",
     "grunt": "^1.0.1",
     "mocha": "^3.2.0",
     "sinon": "^1.17.5",

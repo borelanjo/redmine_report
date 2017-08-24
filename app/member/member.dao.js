@@ -3,7 +3,7 @@
  * @author edrickrenan
  */
 
-'use strict';
+
 
 const path = require('path');
 const BaseDao = require(path.join(__dirname, '..', 'base/base.dao'));
@@ -13,7 +13,7 @@ const MemberModel = require('./member.model.js');
 class MemberDao extends BaseDao {
   constructor() {
     super(MemberModel);
-    // this.model = projectModel;
+    // This.model = projectModel;
   }
 }
 

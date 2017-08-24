@@ -146,7 +146,7 @@ describe('userDao', function() {
       const password = 'test1234';
       const hashed = '1c144e0bc0ed0d0afa7668206fcaa440518c521d';
       const salt = 'eb15da9ca7869dc27f363c2b3993ed72';
-      const newHash = userDao.hashPassword(password, salt);
+      const newHash = UserDao.hashPassword(password, salt);
       expect(newHash, 'Lista de usuários está indefinida').to.be.equal('1c144e0bc0ed0d0afa7668206fcaa440518c521d');
 
 

@@ -1,7 +1,4 @@
-'use strict';
-
 const path = require('path');
-const _ = require('lodash');
 
 const BaseModel = require(path.join(__dirname, '..', 'base/base.model'));
 
@@ -13,82 +10,81 @@ class Issue extends BaseModel {
   }
 
   // Optional JSON schema. This is not the database schema! Nothing is generated
-  // based on this. This is only used for validation. Whenever a model instance
-  // is created it is checked against this schema. http://json-schema.org/.
+  // Based on this. This is only used for validation. Whenever a model instance
+  // Is created it is checked against this schema. http://json-schema.org/.
   static get jsonSchema() {
     return {
-      type: 'object',
-
       properties: {
-        id: {
-          type: 'integer'
-        },
-        tracker_id: {
-          type: 'integer'
-        },
-        project_id: {
-          type: 'integer'
-        },
-        subject: {
-          type: 'string'
-        },
-        description: {
-          type: 'string'
-        },
-        due_date: {
-          type: 'date'
-        },
-        category_id: {
-          type: 'integer'
-        },
-        status_id: {
-          type: 'integer'
-        },
         assigned_to_id: {
-          type: 'integer'
-        },
-        priority_id: {
-          type: 'integer'
-        },
-        fixed_version_id: {
           type: 'integer'
         },
         author_id: {
           type: 'integer'
         },
-        lock_version: {
+        category_id: {
           type: 'integer'
         },
         created_on: {
           type: 'date'
         },
-        updated_on: {
-          type: 'date'
-        },
-        start_date: {
-          type: 'date'
+        description: {
+          type: 'string'
         },
         done_ratio: {
+          type: 'date'
+        },
+        due_date: {
           type: 'date'
         },
         estimated_hours: {
           type: 'float'
         },
-        parent_id: {
+        fixed_version_id: {
           type: 'integer'
         },
-        root_id: {
+        id: {
           type: 'integer'
         },
         lft: {
           type: 'integer'
         },
+        lock_version: {
+          type: 'integer'
+        },
+        parent_id: {
+          type: 'integer'
+        },
+        priority_id: {
+          type: 'integer'
+        },
+        project_id: {
+          type: 'integer'
+        },
         rgt: {
           type: 'integer'
         },
-      }
+        root_id: {
+          type: 'integer'
+        },
+        start_date: {
+          type: 'date'
+        },
+        status_id: {
+          type: 'integer'
+        },
+        subject: {
+          type: 'string'
+        },
+        tracker_id: {
+          type: 'integer'
+        },
+        updated_on: {
+          type: 'date'
+        }
+      },
+      type: 'object'
     }
-  };
+  }
 
   // This object defines the relations to other models.
   static get relationMappings() {
@@ -126,7 +122,7 @@ class Issue extends BaseModel {
         }
       }
     }
-  };
+  }
 
 }
 
