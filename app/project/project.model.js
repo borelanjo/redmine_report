@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 
 const BaseModel = require(path.join(__dirname, '..', 'base/base.model'));
@@ -13,8 +11,8 @@ class Project extends BaseModel {
   }
 
   // Optional JSON schema. This is not the database schema! Nothing is generated
-  // based on this. This is only used for validation. Whenever a model instance
-  // is created it is checked against this schema. http://json-schema.org/.
+  // Based on this. This is only used for validation. Whenever a model instance
+  // Is created it is checked against this schema. http://json-schema.org/.
   static get jsonSchema() {
     return {
       type: 'object',
@@ -61,7 +59,7 @@ class Project extends BaseModel {
         },
         default_version_id: {
           type: 'integer'
-        },
+        }
       }
     }
   }
@@ -72,11 +70,11 @@ class Project extends BaseModel {
       parent: {
         relation: this.BelongsToOneRelation,
         // The related model. This can be either a Model
-        // subclass constructor or an absolute file path
-        // to a module that exports one. We use the file
-        // path version in this example to prevent require
-        // loops.
-        modelClass: __dirname + '/project.model',
+        // Subclass constructor or an absolute file path
+        // To a module that exports one. We use the file
+        // Path version in this example to prevent require
+        // Loops.
+        modelClass: `${__dirname}/project.model`,
         join: {
           from: 'projects.parent_id',
           to: 'projects.id'
@@ -85,15 +83,15 @@ class Project extends BaseModel {
       },
       children: {
         relation: this.HasManyRelation,
-        modelClass: __dirname + '/project.model',
+        modelClass: `${__dirname}/project.model`,
         join: {
           from: 'projects.id',
           // ManyToMany relation needs the `through` object
-          // to describe the join table.
+          // To describe the join table.
           through: {
             // If you have a model class for the join table
-            // you need to specify it like this:
-            // modelClass: PersonMovie,
+            // You need to specify it like this:
+            // ModelClass: PersonMovie,
             from: 'projects.id',
             to: 'projects.parent_id'
           },
@@ -106,11 +104,11 @@ class Project extends BaseModel {
         join: {
           from: 'projects.id',
           // ManyToMany relation needs the `through` object
-          // to describe the join table.
+          // To describe the join table.
           through: {
             // If you have a model class for the join table
-            // you need to specify it like this:
-            // modelClass: PersonMovie,
+            // You need to specify it like this:
+            // ModelClass: PersonMovie,
             modelClass: path.join(__dirname, '..', 'member/member.model'),
             from: 'members.project_id',
             to: 'members.user_id'

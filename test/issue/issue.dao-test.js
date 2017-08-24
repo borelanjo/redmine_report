@@ -1,6 +1,4 @@
-const objection = require('objection');
 const Knex = require('knex');
-const uuidV1 = require('uuid/v1');
 
 const knexConfig = require('./../../knexfile');
 const Model = require('objection').Model;
@@ -8,8 +6,7 @@ const Model = require('objection').Model;
 const chai = require('chai');
 
 const expect = chai.expect;
-const assert = chai.assert;
-const sinon = require('sinon');
+
 const IssueDao = require('./../../app/issue/issue.dao');
 
 /** Inicializa knex. */

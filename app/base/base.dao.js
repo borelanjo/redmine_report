@@ -3,11 +3,6 @@
  * @author borelanjo
  */
 
-'use strict';
-
-const objection = require('objection');
-
-
 class BaseDao {
 
   constructor(model) {
@@ -15,49 +10,49 @@ class BaseDao {
   }
 
   findAll(option, callback) {
-    let queryBuilder = this.model
-      .query()
-      .orderBy('id');
+    const queryBuilder = this.model.
+    query().
+    orderBy('id');
 
-    for (let variable in option) {
-      if (option.hasOwnProperty(variable)) {
+    for (const variable in option) {
+      if (Reflect.has(option, variable)) {
         queryBuilder[variable](option[variable])
       }
     }
-    queryBuilder
-      .then(function(versions) {
-        callback(null, versions);
-      })
-      .catch(function(err) {
-        callback(err);
-      });
+    queryBuilder.
+    then(function(versions) {
+      callback(null, versions);
+    }).
+    catch(function(err) {
+      callback(err);
+    });
   }
 
   findById(id, option, callback) {
 
-    if (id) {
-      let queryBuilder = this.model
-        .query()
-        .where('id', id)
-        .orderBy('id')
-        .first();
-
-      for (let variable in option) {
-        if (option.hasOwnProperty(variable)) {
-          queryBuilder[variable](option[variable])
-        }
-      }
-
-      queryBuilder
-        .then(function(projects) {
-          callback(null, projects);
-        })
-        .catch(function(err) {
-          callback(err);
-        });
-    } else {
-      callback(new Error('Id can\'t be null'));
+    if (!id) {
+      return callback(new Error('Id can\'t be null'));
     }
+
+    const queryBuilder = this.model.
+    query().
+    where('id', id).
+    orderBy('id').
+    first();
+
+    for (const variable in option) {
+      if (Reflect.has(option, variable)) {
+        queryBuilder[variable](option[variable])
+      }
+    }
+
+    return queryBuilder.
+    then(function(projects) {
+      return callback(null, projects);
+    }).
+    catch(function(err) {
+      return callback(err);
+    });
   }
 
 }

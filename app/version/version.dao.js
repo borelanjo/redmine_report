@@ -3,7 +3,7 @@
  * @author edrickrenan
  */
 
-'use strict';
+
 
 const VersionModel = require('./version.model.js');
 
