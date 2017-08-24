@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const _ = require('lodash');
 
 const BaseModel = require(path.join(__dirname, '..', 'base/base.model'));
 
